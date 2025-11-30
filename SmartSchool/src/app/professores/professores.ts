@@ -11,13 +11,14 @@ import { CommonModule } from '@angular/common';
 })
 export class Professores {
 
-   titulo = 'Professor';
+   titulo = 'Professores';
 
-  professores =  [
-    { nome: 'Marta' },
-    { nome: 'Paula' },
-    { nome: 'Luiza' },
-    { nome: 'Agata' },
-  ];
+ public professores = [
+  { id: 1, nome: 'Lauro', disciplina: 'Matemática' },
+  { id: 2, nome: 'Roberto', disciplina: 'Física' },
+  { id: 3, nome: 'Ronaldo', disciplina: 'Português' },
+  { id: 4, nome: 'Rodrigo', disciplina: 'Inglês' },
+  { id: 5, nome: 'Alexandre', disciplina: 'Programação' },
+];
 
 }

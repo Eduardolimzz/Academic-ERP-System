@@ -1,7 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
-import { Alunos } from './alunos/alunos';
-import { Professores } from './professores/professores';
+import { RouterOutlet} from '@angular/router';
 import { Nav } from './nav/nav';
 
 @Component({
@@ -9,9 +7,6 @@ import { Nav } from './nav/nav';
   standalone: true,
   imports: [
     RouterOutlet,
-    RouterLink, 
-    Alunos,
-    Professores,
     Nav,
   ],
   templateUrl: './app.html',

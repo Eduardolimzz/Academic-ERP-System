@@ -1,6 +1,20 @@
 <h1>{{titulo}}</h1>
-<ul>
-    <li *ngFor="let aluno of alunos">
-        {{aluno.nome}}
-    </li>
-</ul>
+
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Sobrenome</th> <!-- Corrigido para Sobrenome -->
+      <th scope="col">Telefone</th> <!-- Corrigido para Telefone -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let aluno of alunos">
+      <th scope="row">{{aluno.id}}</th>
+      <td>{{aluno.nome}}</td>
+      <td>{{aluno.sobrenome}}</td>
+      <td>{{aluno.telefone}}</td>
+    </tr>
+  </tbody>
+</table>

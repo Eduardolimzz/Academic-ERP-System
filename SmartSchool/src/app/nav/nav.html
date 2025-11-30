@@ -1,36 +1,135 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a routerLink="dashboard" routerLinkActive="active" class="navbar-brand">
+      <i class="fas fa-graduation-cap"></i>
+      SmartSchool
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a routerLink="alunos" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-user-graduate"></i>
+            Alunos
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          <a routerLink="professores" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-chalkboard-teacher"></i>
+            Professores
+          </a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-circle fa-lg"></i>
+            <span class="ms-1">Conta</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" routerLink="perfil"><i class="fas fa-user me-2"></i>Perfil</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configurações</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
+
+<style>
+  .navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #2c3e50;
+    transition: color 0.3s;
+  }
+
+  .navbar-brand:hover {
+    color: #3498db;
+  }
+
+  .navbar-brand i {
+    margin-right: 8px;
+    color: #3498db;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    color: #5a6c7d;
+    margin: 0 8px;
+    padding: 8px 16px !important;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav-link i {
+    margin-right: 6px;
+    color: #7f8c8d;
+  }
+
+  .nav-link:hover {
+    color: #2c3e50;
+    background-color: #f8f9fa;
+    border-bottom-color: #3498db;
+  }
+
+  .nav-link:hover i {
+    color: #3498db;
+  }
+
+  .nav-link.active {
+    color: #3498db;
+    border-bottom-color: #3498db;
+    background-color: #f8f9fa;
+  }
+
+  .nav-link.active i {
+    color: #3498db;
+  }
+
+  .dropdown-menu {
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    margin-top: 8px;
+    min-width: 200px;
+  }
+
+  .dropdown-item {
+    padding: 10px 16px;
+    margin: 2px 0;
+    transition: all 0.2s;
+    color: #5a6c7d;
+    font-weight: 500;
+  }
+
+  .dropdown-item i {
+    color: #7f8c8d;
+    width: 20px;
+  }
+
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+  }
+
+  .dropdown-item:hover i {
+    color: #3498db;
+  }
+
+  .dropdown-divider {
+    margin: 8px 0;
+    border-color: #e0e0e0;
+  }
+</style>
