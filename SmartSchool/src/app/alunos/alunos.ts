@@ -11,7 +11,8 @@ import { CommonModule } from '@angular/common';
 })
 export class Alunos {
 
-  titulo = 'Alunos'; 
+  titulo = 'Alunos';
+  public alunoSelected: string | undefined;
 
   public alunos = [
     { id: 1, nome: 'Marta', sobrenome: 'Kent', telefone: 33225555 },
@@ -22,5 +23,13 @@ export class Alunos {
     { id: 6, nome: 'Pedro', sobrenome: 'Alvares', telefone: 456454545 },
     { id: 7, nome: 'Paulo', sobrenome: 'José', telefone: 9874512 },
   ];
+
+  voltar(){
+    this.alunoSelected = '';
+  }
+
+  AlunoSelect(aluno: any){
+    this.alunoSelected = aluno.nome;
+  }
 
 }
