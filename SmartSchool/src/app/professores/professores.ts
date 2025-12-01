@@ -1,39 +1,89 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Professor } from '../models/Professor';
+import { AlunosLista } from '../alunos/alunos-lista';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-professores',
   imports: [
-    CommonModule 
+    CommonModule,
+    ReactiveFormsModule,
+    AlunosLista
   ],
   templateUrl: './professores.html',
   styleUrl: './professores.css',
 })
 export class Professores {
 
-    titulo = 'Professores';
-    
-    // Variável agora armazena o OBJETO Professor ou undefined (Opção 1)
-    public professorSelected: Professor | undefined;
+  public modalRef?: NgbModalRef;
+  titulo = 'Professores';
+  public professorSelected: Professor | undefined;
+  public textSimple: string | undefined;
+  public professorForm!: FormGroup;
+  public alunosDoProfessor: any[] = [];
 
-    // O compilador pode reclamar que os objetos aqui não são do tipo Professor, 
-    // mas isso é resolvido se a interface Professor for um espelho deste formato.
-    public professores = [
-      { id: 1, nome: 'Lauro', disciplina: 'Matemática' },
-      { id: 2, nome: 'Roberto', disciplina: 'Física' },
-      { id: 3, nome: 'Ronaldo', disciplina: 'Português' },
-      { id: 4, nome: 'Rodrigo', disciplina: 'Inglês' },
-      { id: 5, nome: 'Alexandre', disciplina: 'Programação' },
-    ];
+  public professores = [
+    { id: 1, nome: 'Lauro', disciplina: 'Matemática' },
+    { id: 2, nome: 'Roberto', disciplina: 'Física' },
+    { id: 3, nome: 'Ronaldo', disciplina: 'Português' },
+    { id: 4, nome: 'Rodrigo', disciplina: 'Inglês' },
+    { id: 5, nome: 'Alexandre', disciplina: 'Programação' },
+  ];
 
-    voltar(){
-      // Limpando a seleção para voltar para a tabela
-      this.professorSelected = undefined; 
-    }
+  private todosAlunos = [
+    { id: 1, nome: 'Marta', sobrenome: 'Kent', telefone: 33225555 },
+    { id: 2, nome: 'Paula', sobrenome: 'Isabela', telefone: 3354288 },
+    { id: 3, nome: 'Laura', sobrenome: 'Antonia', telefone: 55668899 },
+    { id: 4, nome: 'Luiza', sobrenome: 'Maria', telefone: 6565659 },
+    { id: 5, nome: 'Lucas', sobrenome: 'Machado', telefone: 565685415 },
+    { id: 6, nome: 'Pedro', sobrenome: 'Alvares', telefone: 456454545 },
+    { id: 7, nome: 'Paulo', sobrenome: 'José', telefone: 9874512 },
+  ];
 
-    // A função agora atribui o OBJETO COMPLETO à variável professorSelected
-    ProfessorSelect(professor: Professor){
-      this.professorSelected = professor; 
-    }
+  private professorAlunoRelacao: any = {
+    1: [1, 2, 3],
+    2: [2, 4, 5],
+    3: [1, 3, 6],
+    4: [4, 5, 7],
+    5: [1, 5, 6, 7],
+  };
+
+  constructor(
+    private fb: FormBuilder,
+    private modalService: NgbModal
+  ) {
+    this.criarForm();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    // Mostra TODOS os alunos
+    this.alunosDoProfessor = this.todosAlunos;
+
+    this.modalRef = this.modalService.open(template, {
+      centered: true,
+      size: 'lg'
+    });
+  }
+
+  voltar() {
+    this.professorSelected = undefined;
+  }
+
+  professorSubmit() {
+    console.log(this.professorForm.value);
+  }
+
+  criarForm() {
+    this.professorForm = this.fb.group({
+      nome: ['', Validators.required],
+      disciplina: ['', Validators.required]
+    });
+  }
+
+  ProfessorSelect(professor: Professor) {
+    this.professorSelected = professor;
+    this.professorForm.patchValue(professor);
+  }
 }

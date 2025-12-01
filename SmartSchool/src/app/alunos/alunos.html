@@ -1,51 +1,89 @@
-<h1>{{alunoSelected ? 'Aluno: ' + alunoSelected.nome : titulo}}</h1>
+<div class="container-fluid p-4">
+  <div class="mb-4">
+    <h1 class="display-6 fw-bold text-primary">
+      {{alunoSelected ? 'Aluno: ' + alunoSelected.nome : titulo}}
+    </h1>
+    <hr class="border-primary border-2 opacity-50">
+  </div>
 
-<div class="row">
+  <div class="row">
 
-  <div *ngIf="alunoSelected">
-    <br>
-    <div class="mt-1 d-flex justify-content-end">
-      <button class="btn btn-danger" (click)="voltar()">Voltar</button>
+    <div *ngIf="alunoSelected" class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-danger" (click)="voltar()">Voltar</button>
+          </div>
+
+          <form [formGroup]="alunoForm" (submit)="alunoSubmit()">
+            <div class="form-group">
+              <label for="formGroupExampleInput">Nome</label>
+              <input type="text" formControlName="nome" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="formGroupExampleInput2">Sobrenome</label>
+              <input type="text" formControlName="sobrenome" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="formGroupExampleInput2">Telefone</label>
+              <input type="text" formControlName="telefone" class="form-control">
+            </div>
+            <br>
+            <div class="form-group">
+              <button class="btn btn-success" [disabled]="!alunoForm.valid">Enviar</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <form [formGroup]="alunoForm" (submit)="alunoSubmit()">
-      <div class="form-group">
-        <label for="formGroupExampleInput">Nome</label>
-        <input type="text" formControlName="nome" class="form-control">
+    <div *ngIf="!alunoSelected" class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Visualizar</th>
+                  <th scope="col">#</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Sobrenome</th>
+                  <th scope="col">Telefone</th>
+                  <th scope="col">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let aluno of alunos">
+                  <td><button (click)="AlunoSelect(aluno)" class="btn btn-warning">Detalhe</button></td>
+                  <td scope="row">{{aluno.id}}</td>
+                  <td>{{aluno.nome}}</td>
+                  <td>{{aluno.sobrenome}}</td>
+                  <td>{{aluno.telefone}}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button (click)="openModal(template)" class="btn btn-outline-primary">Professores</button>
+                      <button class="btn btn-outline-danger">Desativar</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="formGroupExampleInput2">Sobrenome</label>
-        <input type="text" formControlName="sobrenome" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="formGroupExampleInput2">Telefone</label>
-        <input type="text" formControlName="telefone" class="form-control">
-      </div>
-      <br>
-      <div class="form-group">
-        <button class="btn btn-success" [disabled]="!alunoForm.valid">Enviar</button>
-      </div>
-    </form>
-  </div>
+    </div>
 
-  <div *ngIf="!alunoSelected">
-    <table class="table table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Sobrenome</th>
-          <th scope="col">Telefone</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let aluno of alunos" style="cursor: pointer;" (click)="AlunoSelect(aluno)">
-          <th scope="row">{{aluno.id}}</th>
-          <td>{{aluno.nome}}</td>
-          <td>{{aluno.sobrenome}}</td>
-          <td>{{aluno.telefone}}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title">Professores do Aluno</h4>
+  </div>
+  <div class="modal-body">
+    <app-professores-lista [professores]="professoresDoAluno"></app-professores-lista>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef?.dismiss()">Fechar</button>
+  </div>
+</ng-template>
