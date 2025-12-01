@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Aluno } from '../models/Aluno';
 
 @Component({
   selector: 'app-alunos',
@@ -12,7 +13,8 @@ import { CommonModule } from '@angular/common';
 export class Alunos {
 
   titulo = 'Alunos';
-  public alunoSelected: string | undefined;
+  public alunoSelected: Aluno | undefined;
+  public textSimple: string | undefined;
 
   public alunos = [
     { id: 1, nome: 'Marta', sobrenome: 'Kent', telefone: 33225555 },
@@ -25,11 +27,11 @@ export class Alunos {
   ];
 
   voltar(){
-    this.alunoSelected = '';
+    this.alunoSelected = undefined; 
   }
 
-  AlunoSelect(aluno: any){
-    this.alunoSelected = aluno.nome;
+  AlunoSelect(aluno: Aluno){ 
+    this.alunoSelected = aluno; 
   }
 
 }

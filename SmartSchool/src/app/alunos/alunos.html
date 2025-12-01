@@ -1,44 +1,51 @@
-<h1>{{alunoSelected ? 'Aluno: ' + alunoSelected : titulo}}</h1>
+<h1>{{alunoSelected ? 'Aluno: ' + alunoSelected.nome : titulo}}</h1>
 
-<div *ngIf="alunoSelected">
-  <br>
-  <div class="mt-1 d-flex justify-content-end">
-    <button class="btn btn-danger" (click)="voltar()">Voltar</button>
+<div class="row">
+
+  <div *ngIf="alunoSelected">
+    <br>
+    <div class="mt-1 d-flex justify-content-end">
+      <button class="btn btn-danger" (click)="voltar()">Voltar</button>
+    </div>
+
+    <form>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Nome</label>
+        <input type="text" value="{{alunoSelected.nome}}" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Sobrenome</label>
+        <input type="text" value="{{alunoSelected.sobrenome}}" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Telefone</label>
+        <input type="text" value="{{alunoSelected.telefone}}" class="form-control">
+      </div>
+      <br>
+      <div class="form-group">
+        <button class="btn btn-success">Enviar</button>
+      </div>
+    </form>
   </div>
-  
-  <form>
-    <div class="form-group">
-      <label for="formGroupExampleInput">Nome</label>
-      <input type="text" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="formGroupExampleInput2">Sobrenome</label>
-      <input type="text" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="formGroupExampleInput2">Telefone</label>
-      <input type="text" class="form-control">
-    </div>
-  </form>
-</div>
 
-<div *ngIf="!alunoSelected">
-  <table class="table table-hover">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Sobrenome</th>
-        <th scope="col">Telefone</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let aluno of alunos" style="cursor: pointer;" (click)="AlunoSelect(aluno)">
-        <th scope="row">{{aluno.id}}</th>
-        <td>{{aluno.nome}}</td>
-        <td>{{aluno.sobrenome}}</td>
-        <td>{{aluno.telefone}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="!alunoSelected">
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Sobrenome</th>
+          <th scope="col">Telefone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let aluno of alunos" style="cursor: pointer;" (click)="AlunoSelect(aluno)">
+          <th scope="row">{{aluno.id}}</th>
+          <td>{{aluno.nome}}</td>
+          <td>{{aluno.sobrenome}}</td>
+          <td>{{aluno.telefone}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

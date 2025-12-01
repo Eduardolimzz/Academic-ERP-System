@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet} from '@angular/router';
 import { Nav } from './nav/nav';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { Nav } from './nav/nav';
   imports: [
     RouterOutlet,
     Nav,
+    FormsModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
