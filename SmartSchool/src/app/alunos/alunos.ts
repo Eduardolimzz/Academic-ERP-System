@@ -1,20 +1,23 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Aluno } from '../models/Aluno';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-alunos',
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   templateUrl: './alunos.html',
   styleUrl: './alunos.css',
 })
 export class Alunos {
 
-  titulo = 'Alunos';
+  public titulo = 'Alunos';
   public alunoSelected: Aluno | undefined;
   public textSimple: string | undefined;
+  public alunoForm!: FormGroup; //variavel nunca sera nula ou undefined
 
   public alunos = [
     { id: 1, nome: 'Marta', sobrenome: 'Kent', telefone: 33225555 },
@@ -26,12 +29,29 @@ export class Alunos {
     { id: 7, nome: 'Paulo', sobrenome: 'José', telefone: 9874512 },
   ];
 
+  constructor(private fb: FormBuilder){
+    this.criarForm();
+  }
+
   voltar(){
     this.alunoSelected = undefined; 
   }
 
+  alunoSubmit(){
+    console.log(this.alunoForm?.value);
+  }
+
+  criarForm(){
+    this.alunoForm = this.fb.group({
+      nome: ['', Validators.required], //Validators.required é requerido, o nome é requerido
+      sobrenome: ['', Validators.required],
+      telefone: ['', Validators.required]
+    });
+  }
+
   AlunoSelect(aluno: Aluno){ 
     this.alunoSelected = aluno; 
+    this.alunoForm?.patchValue(aluno); 
   }
 
 }

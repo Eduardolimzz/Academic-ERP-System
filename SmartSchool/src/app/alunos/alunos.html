@@ -8,22 +8,22 @@
       <button class="btn btn-danger" (click)="voltar()">Voltar</button>
     </div>
 
-    <form>
+    <form [formGroup]="alunoForm" (submit)="alunoSubmit()">
       <div class="form-group">
         <label for="formGroupExampleInput">Nome</label>
-        <input type="text" value="{{alunoSelected.nome}}" class="form-control">
+        <input type="text" formControlName="nome" class="form-control">
       </div>
       <div class="form-group">
         <label for="formGroupExampleInput2">Sobrenome</label>
-        <input type="text" value="{{alunoSelected.sobrenome}}" class="form-control">
+        <input type="text" formControlName="sobrenome" class="form-control">
       </div>
       <div class="form-group">
         <label for="formGroupExampleInput2">Telefone</label>
-        <input type="text" value="{{alunoSelected.telefone}}" class="form-control">
+        <input type="text" formControlName="telefone" class="form-control">
       </div>
       <br>
       <div class="form-group">
-        <button class="btn btn-success">Enviar</button>
+        <button class="btn btn-success" [disabled]="!alunoForm.valid">Enviar</button>
       </div>
     </form>
   </div>
