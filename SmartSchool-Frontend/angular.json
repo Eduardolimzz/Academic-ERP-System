@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "SmartSchool": {
+    "SmartSchool-Frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -63,10 +63,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "SmartSchool:build:production"
+              "buildTarget": "SmartSchool-Frontend:build:production"
             },
             "development": {
-              "buildTarget": "SmartSchool:build:development"
+              "buildTarget": "SmartSchool-Frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

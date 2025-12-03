@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Rsj8pjJUKd4=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Eduardo Lima\\Academic-ERP-System\\SmartSchool-Backend\\SmartSchool-Backend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Eduardo Lima\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "C:\\Users\\Eduardo Lima\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:SmartSchool": "node dist/SmartSchool/server/server.mjs"
+    "serve:ssr:SmartSchool-Frontend": "node dist/SmartSchool-Frontend/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,
