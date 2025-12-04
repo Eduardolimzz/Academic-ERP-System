@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SmartSchool_Backend.Models
 {
     public class Aluno
@@ -16,5 +18,7 @@ namespace SmartSchool_Backend.Models
         public string nome { get; set; }
         public string sobrenome { get; set; }
         public string telefone { get; set; }
+
+        public IEnumerable<AlunoDisciplina> AlunosDisciplinas { get; set; }
     }
 }

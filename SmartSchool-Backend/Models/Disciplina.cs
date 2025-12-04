@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SmartSchool_Backend.Models
 {
     public class Disciplina
@@ -16,6 +18,8 @@ namespace SmartSchool_Backend.Models
         public int ProfessorId { get; set; }
 
         public Professor Professor { get; set; }
+
+        public IEnumerable<AlunoDisciplina> AlunosDisciplinas { get; set; }
         
     }
 }
