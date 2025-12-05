@@ -69,7 +69,6 @@ namespace SmartSchool_Backend.Controllers
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    // Retorna um status 201 Created se o aluno foi adicionado com sucesso
                     return Created($"/api/aluno/{model.id}", model);
                 }
             }
@@ -116,7 +115,7 @@ namespace SmartSchool_Backend.Controllers
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Ok(new { message = "Aluno deletado com sucesso" }); // Melhorando o retorno
+                    return Ok(new { message = "Aluno deletado com sucesso" });
                 }
             }
             catch (Exception ex)

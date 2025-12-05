@@ -1,6 +1,5 @@
 <div class="row">
-    <!-- Formulário de Edição/Cadastro -->
-    <div class="col-sm-6" *ngIf="alunoSelecionado">
+    <div class="col-sm-12" *ngIf="alunoSelecionado">
         <div class="row mb-3">
             <div class="col">
                 <h4 *ngIf="alunoSelecionado.id !== 0">Cód. Aluno: {{ alunoSelecionado.id }}</h4>
@@ -35,10 +34,8 @@
         </form>
     </div>
 
-    <!-- Tabela de Alunos -->
-    <div [ngClass]="{'col-sm-6': alunoSelecionado, 'col-sm-12': !alunoSelecionado}">
+    <div class="col-sm-12" *ngIf="!alunoSelecionado">
         
-        <!-- Botão de Cadastro Novo -->
         <div class="d-flex justify-content-between align-items-center pb-2">
             <h3>{{ titulo }}</h3>
             <button class="btn btn-outline-success" (click)="novoAluno()">
@@ -73,7 +70,6 @@
                             <button (click)="openModal(template, aluno.id)" class="btn btn-sm btn-outline-primary">
                                 Professores
                             </button>
-                            <!-- Chame o método para abrir o modal de confirmação -->
                             <button class="btn btn-sm btn-outline-danger" (click)="abrirConfirmacaoExclusao(aluno.id, confirmacaoExclusao)">
                                 Desativar
                             </button>
@@ -85,7 +81,6 @@
     </div>
 </div>
 
-<!-- Modal para Professores -->
 <ng-template #template>
     <div class="modal-header">
         <h4 class="modal-title">Professores do Aluno</h4>
@@ -101,7 +96,6 @@
     </div>
 </ng-template>
 
-<!-- Novo Modal de Confirmação de Exclusão -->
 <ng-template #confirmacaoExclusao>
     <div class="modal-header">
         <h4 class="modal-title text-danger">Confirmação de Exclusão</h4>
