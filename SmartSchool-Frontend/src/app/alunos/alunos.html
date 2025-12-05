@@ -1,89 +1,122 @@
-<div class="container-fluid p-4">
-  <div class="mb-4">
-    <h1 class="display-6 fw-bold text-primary">
-      {{alunoSelected ? 'Aluno: ' + alunoSelected.nome : titulo}}
-    </h1>
-    <hr class="border-primary border-2 opacity-50">
-  </div>
-
-  <div class="row">
-
-    <div *ngIf="alunoSelected" class="col-12">
-      <div class="card shadow-sm">
-        <div class="card-body p-4">
-          <div class="d-flex justify-content-end mb-3">
-            <button class="btn btn-danger" (click)="voltar()">Voltar</button>
-          </div>
-
-          <form [formGroup]="alunoForm" (submit)="alunoSubmit()">
-            <div class="form-group">
-              <label for="formGroupExampleInput">Nome</label>
-              <input type="text" formControlName="nome" class="form-control">
+<div class="row">
+    <!-- Formulário de Edição/Cadastro -->
+    <div class="col-sm-6" *ngIf="alunoSelecionado">
+        <div class="row mb-3">
+            <div class="col">
+                <h4 *ngIf="alunoSelecionado.id !== 0">Cód. Aluno: {{ alunoSelecionado.id }}</h4>
+                <h4 *ngIf="alunoSelecionado.id === 0">Novo Aluno</h4>
             </div>
-            <div class="form-group">
-              <label for="formGroupExampleInput2">Sobrenome</label>
-              <input type="text" formControlName="sobrenome" class="form-control">
+            <div class="col-auto">
+                <button class="btn btn-sm btn-outline-danger" (click)="voltar()">
+                    Fechar
+                </button>
             </div>
-            <div class="form-group">
-              <label for="formGroupExampleInput2">Telefone</label>
-              <input type="text" formControlName="telefone" class="form-control">
-            </div>
-            <br>
-            <div class="form-group">
-              <button class="btn btn-success" [disabled]="!alunoForm.valid">Enviar</button>
-            </div>
-          </form>
         </div>
-      </div>
+        
+        <form [formGroup]="alunoForm">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" formControlName="nome" class="form-control" id="nome">
+            </div>
+            <div class="form-group">
+                <label for="sobrenome">Sobrenome</label>
+                <input type="text" formControlName="sobrenome" class="form-control" id="sobrenome">
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="text" formControlName="telefone" class="form-control" id="telefone">
+            </div>
+            <div class="form-group">
+                <hr>
+                <button class="btn btn-success" (click)="saveAluno()" [disabled]="!alunoForm.valid">
+                    Enviar
+                </button>
+            </div>
+        </form>
     </div>
 
-    <div *ngIf="!alunoSelected" class="col-12">
-      <div class="card shadow-sm">
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table table-hover mb-0">
-              <thead class="thead-light">
+    <!-- Tabela de Alunos -->
+    <div [ngClass]="{'col-sm-6': alunoSelecionado, 'col-sm-12': !alunoSelecionado}">
+        
+        <!-- Botão de Cadastro Novo -->
+        <div class="d-flex justify-content-between align-items-center pb-2">
+            <h3>{{ titulo }}</h3>
+            <button class="btn btn-outline-success" (click)="novoAluno()">
+                Cadastrar Aluno
+            </button>
+        </div>
+        
+        <table class="table table-hover">
+            <thead class="thead-light">
                 <tr>
-                  <th scope="col">Visualizar</th>
-                  <th scope="col">#</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Sobrenome</th>
-                  <th scope="col">Telefone</th>
-                  <th scope="col">Opções</th>
+                    <th scope="col">Visualizar</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Sobrenome</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Opções</th>
                 </tr>
-              </thead>
-              <tbody>
+            </thead>
+            <tbody>
                 <tr *ngFor="let aluno of alunos">
-                  <td><button (click)="AlunoSelect(aluno)" class="btn btn-warning">Detalhe</button></td>
-                  <td scope="row">{{aluno.id}}</td>
-                  <td>{{aluno.nome}}</td>
-                  <td>{{aluno.sobrenome}}</td>
-                  <td>{{aluno.telefone}}</td>
-                  <td>
-                    <div class="btn-group">
-                      <button (click)="openModal(template)" class="btn btn-outline-primary">Professores</button>
-                      <button class="btn btn-outline-danger">Desativar</button>
-                    </div>
-                  </td>
+                    <td>
+                        <button (click)="alunoSelect(aluno)" class="text-dark btn btn-sm btn-outline-warning">
+                            Detalhe
+                        </button>
+                    </td>
+                    <td scope="row">{{ aluno.id }}</td>
+                    <td>{{ aluno.nome }}</td>
+                    <td>{{ aluno.sobrenome }}</td>
+                    <td>{{ aluno.telefone }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button (click)="openModal(template, aluno.id)" class="btn btn-sm btn-outline-primary">
+                                Professores
+                            </button>
+                            <!-- Chame o método para abrir o modal de confirmação -->
+                            <button class="btn btn-sm btn-outline-danger" (click)="abrirConfirmacaoExclusao(aluno.id, confirmacaoExclusao)">
+                                Desativar
+                            </button>
+                        </div>
+                    </td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+            </tbody>
+        </table>
     </div>
-
-  </div>
 </div>
 
+<!-- Modal para Professores -->
 <ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title">Professores do Aluno</h4>
-  </div>
-  <div class="modal-body">
-    <app-professores-lista [professores]="professoresDoAluno"></app-professores-lista>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modalRef?.dismiss()">Fechar</button>
-  </div>
+    <div class="modal-header">
+        <h4 class="modal-title">Professores do Aluno</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+        <app-professores-lista [professores]="profsAlunos"></app-professores-lista>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+            FECHAR
+        </button>
+    </div>
+</ng-template>
+
+<!-- Novo Modal de Confirmação de Exclusão -->
+<ng-template #confirmacaoExclusao>
+    <div class="modal-header">
+        <h4 class="modal-title text-danger">Confirmação de Exclusão</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+        <p>Você tem certeza que deseja desativar/excluir o Aluno de Código <strong>{{ alunoIdParaExclusao }}</strong>?</p>
+        <p class="text-danger">Esta ação não pode ser desfeita.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+            Cancelar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deletarAlunoConfirmado()">
+            Confirmar Exclusão
+        </button>
+    </div>
 </ng-template>

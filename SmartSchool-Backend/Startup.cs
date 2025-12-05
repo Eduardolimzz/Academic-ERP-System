@@ -34,7 +34,11 @@ namespace SmartSchool_Backend
             services.AddControllers()
             .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = 
             Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            
             services.AddScoped<IRepository, Repository>();
+            
+            // Adiciona o serviço CORS
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +52,8 @@ namespace SmartSchool_Backend
             // app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
 

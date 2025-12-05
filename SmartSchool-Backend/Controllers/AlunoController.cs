@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace SmartSchool_Backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AlunoController : ControllerBase
     {
         private readonly IRepository _repo;
@@ -69,7 +69,8 @@ namespace SmartSchool_Backend.Controllers
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Ok(model);
+                    // Retorna um status 201 Created se o aluno foi adicionado com sucesso
+                    return Created($"/api/aluno/{model.id}", model);
                 }
             }
             catch (Exception ex)
@@ -115,7 +116,7 @@ namespace SmartSchool_Backend.Controllers
 
                 if (await _repo.SaveChangesAsync())
                 {
-                    return Ok("Deletado");
+                    return Ok(new { message = "Aluno deletado com sucesso" }); // Melhorando o retorno
                 }
             }
             catch (Exception ex)
