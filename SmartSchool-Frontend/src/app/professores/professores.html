@@ -1,84 +1,128 @@
 <div class="container-fluid p-4">
-  <div class="mb-4">
-    <h1 class="display-6 fw-bold text-primary">
-      {{professorSelected ? 'Professor: ' + professorSelected.nome : titulo}}
-    </h1>
-    <hr class="border-primary border-2 opacity-50">
-  </div>
-
-  <div class="row">
-
-    <div *ngIf="professorSelected" class="col-12">
-      <div class="card shadow-sm">
-        <div class="card-body p-4">
-          <div class="d-flex justify-content-end mb-3">
-            <button class="btn btn-danger" (click)="voltar()">Voltar</button>
-          </div>
-
-          <form [formGroup]="professorForm" (submit)="professorSubmit()">
-            <div class="form-group">
-              <label for="formGroupExampleInput">Nome</label>
-              <input type="text" formControlName="nome" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="formGroupExampleInput2">Disciplina</label>
-              <input type="text" formControlName="disciplina" class="form-control">
-            </div>
-            <br>
-            <div class="form-group">
-              <button class="btn btn-success" [disabled]="!professorForm.valid">Enviar</button>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div class="mb-4">
+        <h1 class="display-6 fw-bold text-primary">
+            {{professorSelected ? 'Professor: ' + professorSelected.nome : titulo}}
+        </h1>
+        <hr class="border-primary border-2 opacity-50">
     </div>
 
-    <div *ngIf="!professorSelected" class="col-12">
-      <div class="card shadow-sm">
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table table-hover mb-0">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Visualizar</th>
-                  <th scope="col">#</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Disciplina</th>
-                  <th scope="col">Opções</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let prof of professores">
-                  <td><button (click)="ProfessorSelect(prof)" class="btn btn-warning">Detalhe</button></td>
-                  <td scope="row">{{prof.id}}</td>
-                  <td>{{prof.nome}}</td>
-                  <td>{{prof.disciplina}}</td>
+    <div class="row">
 
-                  <td>
-                    <div class="btn-group">
-                      <button (click)="openModal(template)" class="btn btn-outline-primary">Alunos</button>
-                      <button class="btn btn-outline-danger">Desativar</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+        <!-- 1. Formulário de Edição/Cadastro -->
+        <div class="col-sm-12" *ngIf="professorSelected">
+            
+            <div class="row mb-3">
+                <div class="col">
+                    <h4 *ngIf="professorSelected.id !== 0">Cód. Professor: {{ professorSelected.id }}</h4>
+                    <h4 *ngIf="professorSelected.id === 0">Novo Professor</h4>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-sm btn-outline-danger" (click)="voltar()">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+
+            <form [formGroup]="professorForm">
+                <input type="hidden" formControlName="id">
+
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" formControlName="nome" class="form-control" id="nome">
+                </div>
+                <div class="form-group">
+                    <label for="disciplina">Disciplina</label>
+                    <input type="text" formControlName="disciplina" class="form-control" id="disciplina">
+                </div>
+                
+                <div class="form-group">
+                    <hr>
+                    <button class="btn btn-success" (click)="professorSubmit()"
+                      [disabled]="!professorForm.valid">
+                        Enviar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 2. Tabela de Professores -->
+        <div class="col-sm-12" *ngIf="!professorSelected">
+            
+            <div class="d-flex justify-content-between align-items-center pb-2">
+                <h3>{{ titulo }}</h3>
+                <button class="btn btn-outline-success" (click)="novoProfessor()">
+                    Cadastrar Professor
+                </button>
+            </div>
+            
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Visualizar</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Disciplina</th>
+                        <th scope="col">Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let prof of professores">
+                        <td>
+                            <button (click)="ProfessorSelect(prof)" class="text-dark btn btn-sm btn-outline-warning">
+                                Detalhe
+                            </button>
+                        </td>
+                        <td scope="row">{{prof.id}}</td>
+                        <td>{{prof.nome}}</td>
+                        <td>{{prof.disciplina}}</td>
+
+                        <td>
+                            <div class="btn-group">
+                                <!-- Passando o ID do professor para buscar os alunos -->
+                                <button (click)="openModal(template, +prof.id)" class="btn btn-sm btn-outline-primary">Alunos</button>
+                                <!-- Chamada para o modal de confirmação de exclusão -->
+                                <button class="btn btn-sm btn-outline-danger" (click)="abrirConfirmacaoExclusao(+prof.id, confirmacaoExclusao)">
+                                    Desativar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-          </div>
         </div>
-      </div>
     </div>
-
-  </div>
 </div>
 
+<!-- Modal para Alunos -->
 <ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title">Alunos do Professor</h4>
-  </div>
-  <div class="modal-body">
-    <app-alunos-lista [alunos]="alunosDoProfessor"></app-alunos-lista>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modalRef?.dismiss()">Fechar</button>
-  </div>
+    <div class="modal-header">
+        <h4 class="modal-title">Alunos do Professor</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+        <app-alunos-lista [alunos]="alunosDoProfessor"></app-alunos-lista>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Fechar</button>
+    </div>
+</ng-template>
+
+<!-- Modal de Confirmação de Exclusão -->
+<ng-template #confirmacaoExclusao>
+    <div class="modal-header">
+        <h4 class="modal-title text-danger">Confirmação de Exclusão</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+    <div class="modal-body">
+        <p>Você tem certeza que deseja desativar/excluir o Professor de Código <strong>{{ professorIdParaExclusao }}</strong>?</p>
+        <p class="text-danger">Esta ação não pode ser desfeita.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+            Cancelar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deletarProfessorConfirmado()">
+            Confirmar Exclusão
+        </button>
+    </div>
 </ng-template>
